@@ -19,7 +19,7 @@ export default function Home() {
     }, []);
     return (
         <div>
-            <main>
+            <main className='bg-slate-50'>
                 {dashboard ? <h1 className='text-center'>{dashboard.title.rendered}</h1> : <div className='centered'>
                     <div className="lds-ellipsis">
                         <div></div>
