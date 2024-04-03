@@ -19,7 +19,8 @@ interface Category {
 }
 
 const Product = () => {
-    const [categories, setCategories] = useState<Category[]>([]);
+    const [simpleProduct, setsimpleProduct] = useState<Category[]>([]);
+    const [variableProduct, setVariableProduct]=useState<any[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -29,7 +30,10 @@ const Product = () => {
                         'Authorization': 'Basic Y2tfZDZjODcyODlhYWQzZTczMzFkOWVhMmE1NGYwZDA5ZGQ2YTc0ZjdiMDpjc18zZGJhMGNmY2RhZjhiMjE1ODg3YTZhNDdlNWJjM2I1OGFjMzNiOTBk'
                     }
                 });
-                setCategories(response.data);
+                const simpleProducts = response.data.filter((product: { type: string; }) => product.type === 'simple');
+                setsimpleProduct(simpleProducts);
+                const variableProducts = response.data.filter((product: { type: string; }) => product.type === 'variable');
+                setVariableProduct(variableProducts)
             } catch (error) {
                 console.log(error);
             }
@@ -50,38 +54,37 @@ const Product = () => {
     }
 
     return (
-        <div>
-            {categories.length === 0 ? (
-                <div className='centered'>
-                    <div className="lds-ellipsis">
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                    </div>
-                </div>
-            ) : (
-                <>
-                    <h2 className='text-center my-20'>Products</h2>
-                    <ul className='flex justify-center'>
-                        {categories.map((category) => (
-                            <li key={category.id} className='mx-5 list-none text-center'>
-                                <Link className='text-center no-underline' href={replaceApiBaseUrl(category._links.self[0].href, category.id)}>
-                                    <img src={category.images[0].src} className='w-80 h-52 object-cover object-center' />
-                                    <strong className='text-center flex justify-center'>
-                                        {category.name}
-                                    </strong>
-                                    <span className='flex justify-center items-center'>
-                                        <p className='mx-2'><s>₹{category.regular_price}</s></p>
-                                        <p>₹{category.sale_price}</p>
-                                    </span>
-                                </Link>
-                                <button type="button" onClick={() => addToCart(category.id)} className="inline-flex w-full justify-center rounded-sm bg-lime-400 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-lime-600 sm:ml-3 sm:w-auto">Add to cart</button>
-                            </li>
-                        ))}
-                    </ul>
-                </>
-            )}
+        <div className='py-10'>
+            <h2 className='text-center my-20'>Products</h2>
+            <ul className='flex justify-center'>
+                {simpleProduct.map((category) => (
+                    <li key={category.id} className='mx-5 list-none text-center'>
+                        <Link className='text-center no-underline' href={replaceApiBaseUrl(category._links.self[0].href, category.id)}>
+                            <img src={category.images[0].src} className='w-80 h-52 object-cover object-center' />
+                            <strong className='text-center flex justify-center'>
+                                {category.name}
+                            </strong>
+                            <span className='flex justify-center items-center'>
+                                <p className='mx-2'><s>₹{category.regular_price}</s></p>
+                                <p>₹{category.sale_price}</p>
+                            </span>
+                        </Link>
+                        <button type="button" onClick={() => addToCart(category.id)} className="inline-flex w-full justify-center rounded-sm bg-lime-400 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-lime-600 sm:ml-3 sm:w-auto">Add to cart</button>
+                    </li>
+                ))}
+                {variableProduct.map((category) => (
+                    <li key={category.id} className='mx-5 list-none text-center'>
+                        <Link className='text-center no-underline' href={replaceApiBaseUrl(category._links.self[0].href, category.id)}>
+                            <img src={category.images[0].src} className='w-80 h-52 object-cover object-center' />
+                            <strong className='text-center flex justify-center'>
+                                {category.name}
+                            </strong>
+                            <p dangerouslySetInnerHTML={{ __html: category.price_html }}></p>
+                        </Link>
+                        <button type="button" onClick={() => addToCart(category.id)} className="inline-flex w-full justify-center rounded-sm bg-lime-400 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-lime-600 sm:ml-3 sm:w-auto">Select Option</button>
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 };

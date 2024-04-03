@@ -47,7 +47,7 @@ const Products = () => {
     };
 
     return (
-        <div>
+        <div className='py-10 relative mt-52'>
             <h2 className='text-center my-10'>Products</h2>
             <ul className='flex justify-center'>
                 {categories.map((category) => (

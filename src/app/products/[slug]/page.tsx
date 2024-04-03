@@ -51,7 +51,7 @@ export default function ProductsShow({ params }: { params: RouteParams }) {
     };
 
     return (
-        <div className="px-16">
+        <div className="p-16 ">
             {productShow.length === 0 ? (
                 <div className='centered'>
                     <div className="lds-ellipsis">
@@ -62,8 +62,8 @@ export default function ProductsShow({ params }: { params: RouteParams }) {
                     </div>
                 </div>
             ) : (
-                <>
-                    <div className='flex justify-center container items-center'>
+                <>  
+                    <div className='flex justify-center container items-center relative mt-52'>
                         {productShow.map((product) => (
                             <div key={product.id}>
                                 <section key={product.id} className='mx-5 list-none text-center w-full flex'>

@@ -18,9 +18,8 @@ export default function Home() {
         })();
     }, []);
     return (
-        <div>
             <main className='bg-slate-50'>
-                {dashboard ? <h1 className='text-center'>{dashboard.title.rendered}</h1> : <div className='centered'>
+                {dashboard ? <h1 className='text-center mt-52'>{dashboard.title.rendered}</h1> : <div className='centered'>
                     <div className="lds-ellipsis">
                         <div></div>
                         <div></div>
@@ -28,10 +27,11 @@ export default function Home() {
                         <div></div>
                     </div>
                 </div>}
+                <div className='relative'>
                 <Categories />
                 <Products />
+                </div>
             </main>
-        </div>
     );
 }
 

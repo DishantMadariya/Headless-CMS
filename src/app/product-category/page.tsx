@@ -42,19 +42,19 @@ const ProductCategories = () => {
         );
     };
     return (
-        <div className=''>
+        <div className='relative'>
             {categories.length === 0 ? (
                 <div className='centered'>
                     <div className="lds-ellipsis">
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
                     </div>
                 </div>
             ) : (
                 <>
-                    <h2 className='text-center my-20'>Shop by Category</h2>
+                    <h2 className='text-center'>Shop by Category</h2>
                     <ul className='flex justify-center'>
                         {categories.map((category) => (
                             <li key={category.id} className='mx-5 list-none'>

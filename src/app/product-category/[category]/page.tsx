@@ -23,6 +23,8 @@ interface Category {
     sale_price: number;
 }
 interface Product {
+    price_html: string | TrustedHTML;
+    type: string;
     id: number;
     name: string;
     slug: string;
@@ -96,7 +98,7 @@ export default function ProductDetails({ params }: { params: RouteParams }): Rea
     };
 
     return (
-        <div>
+        <div className="relative">
             {filteredProducts.length === 0 ? (
                 <div className='centered'>
                     <div className="lds-ellipsis">
@@ -108,8 +110,8 @@ export default function ProductDetails({ params }: { params: RouteParams }): Rea
                 </div>
             ) : (
                 <>
-                    <h2 className='text-center my-10'>Products</h2>
-                    <ul className='flex justify-center'>
+                    <h2 className='text-center my-10 mt-52'>{params.category}</h2>
+                    <ul className='flex justify-center h-auto my-10 flex-wrap'>
                         {filteredProducts.map((Product) => (
                             <li key={Product.id} className='mx-5 list-none text-center'>
                                 <Link className='text-center no-underline' href={replaceApiBaseUrl(Product._links.self[0].href, Product.id)}>
@@ -117,10 +119,12 @@ export default function ProductDetails({ params }: { params: RouteParams }): Rea
                                     <strong className='text-center flex justify-center'>
                                         {Product.name}
                                     </strong>
-                                    <span className='flex justify-center items-center'>
-                                        <p className='mx-2'><s>₹{Product.regular_price}</s></p>
-                                        <p>₹{Product.sale_price}</p>
-                                    </span>
+                                    {Product.type === 'simple' ? (
+                                        <span className='flex justify-center items-center'>
+                                            <p className='mx-2'><s>₹{Product.regular_price}</s></p>
+                                            <p>₹{Product.sale_price}</p>
+                                        </span>
+                                    ) : <p dangerouslySetInnerHTML={{ __html: Product.price_html }}></p>}
                                 </Link>
                                 <button type="button" className="inline-flex w-full justify-center rounded-sm bg-lime-400 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-lime-600 sm:ml-3 sm:w-auto">Add to cart</button>
                             </li>

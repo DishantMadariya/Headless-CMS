@@ -42,58 +42,34 @@ function Navbar() {
     }, []);
 
     return (
-        <div className='container mb-10'>
-            {menuItems.length === 0 ? (
-                <div className='my-10 container'>
-                    <div className="border border-blue-300 shadow rounded-md p-4 w-full mx-auto">
-                        <div className="animate-pulse flex space-x-4">
-                            <div className="rounded-full bg-slate-700 h-10 w-10"></div>
-                            <div className="flex-1 space-y-6 py-1">
-                                <div className="h-2 bg-slate-700 rounded"></div>
-                                <div className="space-y-3">
-                                    <div className="grid grid-cols-3 gap-4">
-                                        <div className="h-2 bg-slate-700 rounded col-span-2"></div>
-                                        <div className="h-2 bg-slate-700 rounded col-span-1"></div>
-                                    </div>
-                                    <div className="h-2 bg-slate-700 rounded"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            ) : (
-                <>
-                    <div style={{ backgroundImage: `url(${bgimage})` }} className='mx-22 h-44 bg-bottom pt-12'>
-                        <div className='mx-36'>
-                            <img src={logo} alt="" />
-                        </div>
-                        <nav className='mx-36'>
-                            <ul className='flex'>
-                                {menuItems.map(menuItem => (
-                                    <li key={menuItem.id} className='pe-6 pt-10'>
-                                        <Link legacyBehavior href={menuItem.href}>
-                                            <a>{menuItem.name}</a>
-                                        </Link>
-                                        {menuItem.children.length > 0 && (
-                                            <ul className="submenu">
-                                                {menuItem.children.map((childItem, index) => {
-                                                    return (
-                                                        <li key={index}>
-                                                            <Link legacyBehavior href={childItem.href}>
-                                                                <a>{childItem.name}</a>
-                                                            </Link>
-                                                        </li>
-                                                    )
-                                                })}
-                                            </ul>
-                                        )}
-                                    </li>
-                                ))}
-                            </ul>
-                        </nav>
-                    </div>
-                </>
-            )}
+        <div style={{ backgroundImage: `url(${bgimage})` }} className='mx-22 h-44 bg-bottom pt-12'>
+            <div className='mx-36'>
+                <img src={logo} alt="" />
+            </div>
+            <nav className='mx-36'>
+                <ul className='flex flex-wrap'>
+                    {menuItems.map(menuItem => (
+                        <li key={menuItem.id} className='pe-6 pt-10'>
+                            <Link legacyBehavior href={menuItem.href}>
+                                <a>{menuItem.name}</a>
+                            </Link>
+                            {menuItem.children.length > 0 && (
+                                <ul className="submenu">
+                                    {menuItem.children.map((childItem, index) => {
+                                        return (
+                                            <li key={index}>
+                                                <Link legacyBehavior href={childItem.href}>
+                                                    <a>{childItem.name}</a>
+                                                </Link>
+                                            </li>
+                                        )
+                                    })}
+                                </ul>
+                            )}
+                        </li>
+                    ))}
+                </ul>
+            </nav>
         </div>
     );
 }
